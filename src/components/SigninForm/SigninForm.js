@@ -1,12 +1,11 @@
 import React from 'react'
-import { BrowserRouter as Router, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { withFormik, Form } from 'formik'
 import * as Yup from 'yup'
 
-function SignupForm(props){
+function SigninForm(props){
     document.title = `Login`;
     return(
-        <Router>
         <div className="border-form">
             <div className="m20 text-center">
                 <h2>Register</h2>
@@ -26,17 +25,16 @@ function SignupForm(props){
                         <div className='input-group-prepend'>
                             <span className='input-group-text'><i class="fas fa-lock"></i></span>
                         </div>
-                        <input type='password' className='form-control' name='password1' value={props.values.password1} placeholder="Create password" onChange={props.handleChange} />
+                        <input type='password' className='form-control' name='password' value={props.values.password} placeholder="Password" onChange={props.handleChange} />
                     </div>
 
                     <div className='form-group'>
-                        <Link to="/" type='submit' className='btn btn-primary btn-block'>Sign up</Link>
+                        <Link to="/" type='submit' className='btn btn-primary btn-block'>Sign in</Link>
                     </div>
                 </Form>
             </div>
     
         </div>
-        </Router>
      
     )
 }
@@ -45,23 +43,17 @@ const FormikForm = withFormik({
     mapPropsToValues() { 
         return {
             username: '',
-            email: '',
-            password1: '',
-            password2: '',
+            password: '',
+           
         }
     },
     validationSchema: Yup.object().shape({
         username: Yup.string()
-            .required('Username is required')
-            .min(5, 'Username must have min 5 characters')
-            .max(50, 'Username have max 50 characters'),
-        email: Yup.string()
-            .required('Email is required')
-            .email('Email is invalid'),
-        password1: Yup.string()
+            .required('Username is required'),
+        password: Yup.string()
             .required('Password is required')
             .min(6, 'Password must have min 6 characters')
     })
-})(SignupForm)
+})(SigninForm)
 
 export default FormikForm

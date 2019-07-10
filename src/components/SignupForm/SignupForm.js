@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import { withFormik, Form, Field } from 'formik'
+import SigninForm from '../SigninForm/SigninForm'
 import * as Yup from 'yup'
 
 function SignupForm(props){
@@ -41,11 +42,11 @@ function SignupForm(props){
                         <input type='password' className='form-control' name='password2' value={props.values.password2} placeholder="Repeat password" onChange={props.handleChange} />
                     </div>
                     <div className='form-group'>
-                        <Link to="/" type='submit' className='btn btn-primary btn-block'>Sign up</Link>
+                        <Link to="/signin" type='submit' className='btn btn-primary btn-block'>Sign up</Link>
                     </div>
                 </Form>
             </div>
-    
+            <Route path="/signin" component={SigninForm} />
         </div>
         </Router>
      
