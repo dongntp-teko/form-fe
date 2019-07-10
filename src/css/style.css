@@ -1,0 +1,16 @@
+.border-form{
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: 100px auto;
+    width: 400px;
+    
+}
+
+.err{
+    color: red;
+    font-size: 10px;
+}
+
+.m20{
+    margin: 20px;
+}
