@@ -1,16 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { withFormik, Form } from 'formik'
+import { createBrowserHistory } from 'history'
 import * as Yup from 'yup'
 
+const history = createBrowserHistory();
+
 function SigninForm(props){
-    document.title = `Login`;
     return(
         <div className="border-form">
             <div className="m20 text-center">
                 <h2>Login</h2>
                 <hr />
-                <Form>
+                <Form onSubmit={props.handleSubmit}>
                     {props.errors.username && props.touched.username && <div className='err'>{props.errors.username}</div>}
                     <div className='form-group input-group'>
                         <div className='input-group-prepend'>
@@ -32,7 +34,7 @@ function SigninForm(props){
                         <Link to='/forgot' className='forgot-password'>Forgot password?</Link>
                     </div>
                     <div className='form-group'>
-                        <Link to="/dashboard" type='submit' className='btn btn-primary btn-block'>Sign in</Link>
+                        <button to="/dashboard" type='submit' className='btn btn-primary btn-block'>Sign in</button>
                     </div>
 
                     <div>
@@ -60,7 +62,11 @@ const FormikForm = withFormik({
         password: Yup.string()
             .required('Password is required')
             .min(6, 'Password must have min 6 characters')
-    })
+    }),
+
+    handleSubmit: () => {
+        history.push('/dashboard')
+    }
 })(SigninForm)
 
 export default FormikForm

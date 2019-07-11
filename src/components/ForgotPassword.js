@@ -2,14 +2,17 @@ import React from 'react'
 import { useState } from 'react'
 import { Formik } from 'formik';
 import { Link } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
+
+const history = createBrowserHistory()
 
 function Forgot(props){
     const [status, setStatus] = useState(true);
     return (
         <Formik
-        initialValues={{ email: '', code: '' }}
+        initialValues={{ email: '',code: ''} }
         onSubmit={() => {
-            setStatus(false)
+            status ? setStatus(false) : history.push('/change')
         }}
         render={props => (
         <div className='border-form'>
@@ -27,14 +30,14 @@ function Forgot(props){
                     </form>
                 ) : (
                     <div>
-                    <form>
+                    <form onSubmit={props.handleSubmit}>
                         <div className='form-group'>
                             <label for='code'>
                                 Please check your email for a message with your code:
                             </label>
-                            <input name='code' value={props.values.code} type='text' className='form-control' placeholder='Code'/>
+                            <input name='code' type='text' className='form-control' placeholder='Code'/>
                         </div>
-                        <Link to='/change' type='submit' className='btn btn-primary btn-block'>Submit</Link>
+                        <button type='submit' className='btn btn-primary btn-block'>Submit</button>
                         
                     </form>  
                     <p>Didn't get a code? <Link>Re-send</Link></p>
