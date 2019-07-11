@@ -1,15 +1,12 @@
 import React from 'react'
 import {Formik} from 'formik'
-import { createBrowserHistory } from 'history'
-
-const history = createBrowserHistory();
 
 function Change(){
     return(
         <Formik 
         initialValues={{ password1: '', password2: '' }}
         onSubmit = {() => {
-            history.push('/dashboard')
+            window.location.pathname='/dashboard';
         }}
         render = {props => (
         <div className='border-form'>

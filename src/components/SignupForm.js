@@ -1,10 +1,7 @@
 import React from 'react'
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
-import { withFormik, Form, Field } from 'formik'
-import { createBrowserHistory } from 'history'
+import { BrowserRouter as Router, Link } from 'react-router-dom'
+import { withFormik } from 'formik'
 import * as Yup from 'yup'
-
-const history = createBrowserHistory();
 
 function SignupForm(props){
     
@@ -89,7 +86,7 @@ const FormikForm = withFormik({
             .min(6, 'Password must have min 6 characters')
     }),
     handleSubmit: () => {
-        history.push('/signin')
+        window.location.pathname='/signin';
       },
 })(SignupForm)
 

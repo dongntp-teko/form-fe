@@ -1,10 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { withFormik, Form } from 'formik'
-import { createBrowserHistory } from 'history'
 import * as Yup from 'yup'
-
-const history = createBrowserHistory();
 
 function SigninForm(props){
     return(
@@ -65,7 +62,7 @@ const FormikForm = withFormik({
     }),
 
     handleSubmit: () => {
-        history.push('/dashboard')
+        window.location.pathname='/dashboard';
     }
 })(SigninForm)
 

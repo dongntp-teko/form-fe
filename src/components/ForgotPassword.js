@@ -2,9 +2,6 @@ import React from 'react'
 import { useState } from 'react'
 import { Formik } from 'formik';
 import { Link } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
-
-const history = createBrowserHistory()
 
 function Forgot(props){
     const [status, setStatus] = useState(true);
@@ -12,7 +9,7 @@ function Forgot(props){
         <Formik
         initialValues={{ email: '',code: ''} }
         onSubmit={() => {
-            status ? setStatus(false) : history.push('/change')
+            status ? setStatus(false) : window.location.pathname='/change';
         }}
         render={props => (
         <div className='border-form'>
