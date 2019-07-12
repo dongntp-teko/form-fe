@@ -7,7 +7,8 @@ function Change(props){
         <Formik 
         initialValues={{ password1: '', password2: '' }}
         onSubmit = {values => {
-            setAcc({password: values.password1}, acc => {props.history.push("/")})
+            const username=acc.user;
+            setAcc({user: username, password: values.password1}, acc => {props.history.push("/")})
         }}
         render = {props => (
         <div className='border-form'>
@@ -19,13 +20,13 @@ function Change(props){
                             <label>
                                 New password:
                             </label>
-                            <input name='password1' type='password' className='form-control'/>
+                            <input name='password1' value={props.values.password1} onChange={props.handleChange} type='password' className='form-control'/>
                         </div>
                         <div className='form-group'>
                             <label>
                                 Repeat password:
                             </label>
-                            <input name='password2' type='password' className='form-control'/>
+                            <input name='password2' value={props.values.password2} onChange={props.handleChange} type='password' className='form-control'/>
                         </div>
                         <button type='submit' className='btn btn-primary btn-block'>Send</button>
                     </form>

@@ -20,7 +20,6 @@ function SigninForm(props) {
       }}
       validationSchema={SigninShechma}
       onSubmit={values => {
-        console.log(account)
         if (
           values.username === account.user &&
           values.password === account.password
