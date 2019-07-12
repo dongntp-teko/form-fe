@@ -9,7 +9,12 @@ function Forgot(props){
         <Formik
         initialValues={{ email: '',code: ''} }
         onSubmit={() => {
-            status ? setStatus(false) : window.location.pathname='/change';
+            if (status){
+                setStatus(false)
+            } else {
+                props.history.push('/change')
+            }
+            
         }}
         render={props => (
         <div className='border-form'>

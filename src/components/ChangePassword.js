@@ -1,19 +1,20 @@
-import React from 'react'
+import React, { useGlobal } from 'reactn'
 import {Formik} from 'formik'
 
-function Change(){
+function Change(props){
+    const [acc, setAcc] = useGlobal('account')
     return(
         <Formik 
         initialValues={{ password1: '', password2: '' }}
-        onSubmit = {() => {
-            window.location.pathname='/dashboard';
+        onSubmit = {values => {
+            setAcc({password: values.password1}, acc => {props.history.push("/")})
         }}
         render = {props => (
         <div className='border-form'>
             
             <div className='m20'>
                     <h2 className='text-center'>Set your password</h2>
-                    <form onSubmit = {props.onSubmit}>
+                    <form onSubmit = {props.handleSubmit}>
                         <div className='form-group'>
                             <label>
                                 New password:

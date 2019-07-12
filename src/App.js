@@ -1,4 +1,4 @@
-import React from "react";
+import React, { setGlobal } from "reactn";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignupForm from './components/SignupForm'
 import SigninForm from './components/SigninForm'
@@ -8,18 +8,22 @@ import NotFound from './components/NotFound'
 import Change from './components/ChangePassword'
 import './css/style.css'
 
+setGlobal({
+  account: {user: '', password: ''},
+  
+})
 
 function App(){
   return(
     <Router>
       <div>
         <Switch>
-          <Route path='/dashboard' component={Dashboard} />
-          <Route path="/signin" component={SigninForm} />
-          <Route path="/signup" component={SignupForm} />
-          <Route path='/forgot' component={Forgot} />
-          <Route path='/notfound' component={NotFound} />
-          <Route path='/change' component={Change} />
+          <Route path='/' exact component={Dashboard} />
+          <Route path="/signin" exact component={SigninForm} />
+          <Route path="/signup" exact component={SignupForm} {...global} />
+          <Route path='/forgot' exact component={Forgot} />
+          <Route path='/notfound' exact component={NotFound} />
+          <Route path='/change' exact component={Change} />
         </Switch>
       </div>
     </Router>
