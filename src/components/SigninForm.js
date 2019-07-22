@@ -1,7 +1,8 @@
-import React, { useGlobal } from "reactn";
+import React, { useGlobal, useState } from "reactn";
 import { Link } from "react-router-dom";
 import { withFormik, Form, Formik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 const SigninShechma = Yup.object().shape({
   username: Yup.string().required("Username is required"),
@@ -12,6 +13,7 @@ const SigninShechma = Yup.object().shape({
 
 function SigninForm(props) {
   const [account, setAccount] = useGlobal("account");
+  const [status, setStatus] = useState("");
   return (
     <Formik
       initialValues={{
@@ -20,17 +22,30 @@ function SigninForm(props) {
       }}
       validationSchema={SigninShechma}
       onSubmit={values => {
-        if (
-          values.username === account.user &&
-          values.password === account.password
-        )
-        props.history.push("/")
+        const body = {
+          username: values.username,
+          password: values.password
+        }
+        axios.post(`http://127.0.0.1:5000/api/users/${values.username}`, body)
+        .then( res => {
+          console.log(res)
+          if (res.data) {
+            setAccount({
+              user: res.data.username,
+              password: res.data.password
+            }, account => props.history.push('/'))
+          } else {
+            setStatus("Username or password is incorrect")
+          }
+        })
+        
       }}
       render={props => (
         <div className="border-form">
           <div className="m20 text-center">
             <h2>Login</h2>
             <hr />
+            <p className='err'>{status}</p>
             <Form onSubmit={props.handleSubmit}>
               {props.errors.username && props.touched.username && (
                 <div className="err">{props.errors.username}</div>

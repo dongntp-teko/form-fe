@@ -1,7 +1,9 @@
-import React, { useGlobal } from "reactn";
+import React, { useGlobal, useEffect, useState } from "reactn";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import axios from 'axios'
+import { resolveSoa } from "dns";
 
 const SignupSchema = Yup.object().shape({
   username: Yup.string()
@@ -13,11 +15,14 @@ const SignupSchema = Yup.object().shape({
     .email("Email is invalid"),
   password1: Yup.string()
     .required("Password is required")
-    .min(6, "Password must have min 6 characters")
+    .min(6, "Password must have min 6 characters"),
+  password2: Yup.string()
+    .required("Confirm your password!")
 });
 
+
 const SignupForm = props => {
-  const [, setAccount] = useGlobal("account");
+  const [status, setStatus] = useState("")
   return (
     <Formik
       initialValues={{
@@ -27,15 +32,25 @@ const SignupForm = props => {
         password2: ""
       }}
       validationSchema={SignupSchema}
-      onSubmit={values => {
-        setAccount(
-          { user: values.username, password: values.password1 },
-          account => {
-            props.history.push("/signin")
-          }
-        );
-
-      }}
+      onSubmit= {values => {
+        const body = {
+          username: values.username,
+          password1: values.password1,
+          password2: values.password2,
+          email: values.email
+        }
+        axios.post('http://127.0.0.1:5000/api/users/', body)
+        .then( (res) => {
+          if (res.data) setStatus(res.data)
+          else props.history.push('/signin')
+        }
+        )
+        .catch(function (error) {
+          console.error(error);
+        });
+        
+      }
+      }
       render={props => (
         <div className="border-form">
           <div className="m20 text-center">
@@ -117,6 +132,7 @@ const SignupForm = props => {
               {props.errors.password2 && props.touched.password2 && (
                 <div className="err">{props.errors.password2}</div>
               )}
+              <p className='err'>{status}</p>
               <div className="form-group">
                 <button type="submit" className="btn btn-primary btn-block">
                   Sign up
