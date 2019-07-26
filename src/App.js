@@ -9,7 +9,7 @@ import Change from './components/ChangePassword'
 import './css/style.css'
 
 setGlobal({
-  account: {user: '', password: '', email: ''},
+  account: {user: '', password: ''},
   
 })
 
